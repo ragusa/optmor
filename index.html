@@ -10,7 +10,7 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Optmor by gramian</title>
+    <title>optmor by gramian</title>
   </head>
 
   <body>
@@ -18,7 +18,7 @@
       <div class="inner">
 
         <header>
-          <h1>Optmor</h1>
+          <h1>optmor</h1>
           <h2>OPTimization-based Model Order Reduction</h2>
         </header>
 
@@ -34,28 +34,151 @@
           <h1>
 <a id="optmor" class="anchor" href="#optmor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>optmor</h1>
 
-<p>OPTimization-based Model Order Reduction (Version 2.1)</p>
+<p>OPTimization-based Model Order Reduction (Version 2.5) <img src="https://zenodo.org/badge/doi/10.5281/zenodo.46683.png" alt="DOI badge"></p>
+
+<h2>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About</h2>
+
+<p>optimization-based model order reduction,
+for the computation of combined state and parameter
+reduced order models of state-space input-output systems</p>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
-<p>All source code is licensed under the open source BSD 2-clause license:
-Copyright (c) 2013-2015, Christian Himpe</p>
+<p>All source code is licensed under the open source 
+<a href="http://opensource.org/licenses/BSD-2-Clause">BSD 2-clause license</a>:</p>
+
+<h4>
+<a id="copyright-c-2013-2016-christian-himpe" class="anchor" href="#copyright-c-2013-2016-christian-himpe" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Copyright (c) 2013-2016, Christian Himpe</h4>
 
 <p>All rights reserved.</p>
 
-<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met: </p>
 
 <ol>
-<li><p>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</p></li>
-<li><p>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</p></li>
+<li><p>Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.</p></li>
+<li><p>Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.</p></li>
 </ol>
 
-<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>General Usage: <code>{X,P} = optmor(f,g,s,t,w,pr,nf,ut,us,xs,um,xm);</code></p>
+
+<p>Minimal Usage: <code>{X,P} = optmor(f,g,s,t,w);</code></p>
+
+<p>About Info Usage: <code>v = optmor('version');</code></p>
+
+<h2>
+<a id="arguments" class="anchor" href="#arguments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arguments</h2>
+
+<p><code>f</code> - system function handle; signature: xdot = f(x,u,p)</p>
+
+<p><code>g</code> - output function handle; signature: y = g(x,u,p)</p>
+
+<p><code>s</code> - system dimensions [inputs,states,outputs]</p>
+
+<p><code>t</code> - time discretization [step,stop]</p>
+
+<p><code>r</code> - reduced order(&gt;1) or error threshold(&lt;1)</p>
+
+<p><code>q</code> - nominal parameter</p>
+
+<h3>
+<a id="optional-arguments" class="anchor" href="#optional-arguments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Optional Arguments</h3>
+
+<p><code>nf</code> - options, 6 components</p>
+
+<p><code>ut</code> - input; default: delta impulse</p>
+
+<p><code>x0</code> - initial state; default: zero</p>
+
+<p><code>co</code> - covariance matrix; default: unit </p>
+
+<p><code>yd</code> - experimental data; default: empty</p>
+
+<h2>
+<a id="flags" class="anchor" href="#flags" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Flags</h2>
+
+<p><code>nf(1)</code> - Optimization Algorithm: fminunc(0), fminsearch(1), custom(-1)</p>
+
+<p><code>nf(2)</code> - Lasso Regularization Weight: default(0)</p>
+
+<p><code>nf(3)</code> - Tikhonov Regularization Weight: default(0.1)</p>
+
+<p><code>nf(4)</code> - Data-Driven Regularization Weight: default(0)</p>
+
+<p><code>nf(5)</code> - Number of Maximum Optimizer Iterations: default(4)</p>
+
+<p><code>nf(6)</code> - Initial Parameter: last(0), random(1)</p>
+
+<h2>
+<a id="references" class="anchor" href="#references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References</h2>
+
+<ul>
+<li>C. Himpe, M. Ohlberger; "<a href="http://dx.doi.org/10.1007/s10444-015-9420-5">Data-driven combined state and parameter reduction for inverse problems</a>"; Advances in Computational Mathematics 41(5): 1343--1364, 2015.
+
+<ul>
+<li>One-Sentence Abstract: Extensions for combined state and parameter reduction for inverse problems.</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="cite" class="anchor" href="#cite" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cite</h2>
+
+<ul>
+<li>
+<p>Cite as:</p>
+
+<p>C. Himpe (2016). optmor - Optimization-Based Model Order Reduction (Version 2.5) [Software]. <a href="http://gramian.github.io/optmor">http://gramian.github.io/optmor</a></p>
+</li>
+<li>
+<p>BibTeX:</p>
+
+<pre><code>@MISC{optmor,
+ author = {C. Himpe},
+ title = {{optmor} - Optimization-Based Model Order Reduction (Version 2.5)},
+ howpublished = {\url{http://gramian.github.io/optmor}},
+ year = {2016}
+}
+</code></pre>
+</li>
+<li>DOI: <a href="http://dx.doi.org/10.5281/zenodo.46683">10.5281/zenodo.46683</a> (Version 2.5)</li>
+<li>Last Change: 2016-02-28</li>
+</ul>
+
+<h2>
+<a id="links" class="anchor" href="#links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Links</h2>
+
+<ul>
+<li>
+<a href="http://gramian.de">http://gramian.de</a> emgr - Empirical Gramian Framework</li>
+<li>
+<a href="http://modelreduction.org">http://modelreduction.org</a> Model Order Reduction Wiki</li>
+<li>
+<a href="http://morepas.org">http://morepas.org</a> Model Reduction for Parametrized Systems</li>
+</ul>
         </section>
 
         <footer>
-          Optmor is maintained by <a href="https://github.com/gramian">gramian</a><br>
+          optmor is maintained by <a href="https://github.com/gramian">gramian</a><br>
           This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
